@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- title -->
+    <title>Final Year Project</title>
+
+    <!-- metadata -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- css file -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/play.css') }}"
+    />
+
+    <link rel="stylesheet" href="./../static/css/play.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </head>
+
+  <body>
+    <div class="nav">
+      <h1>Violence Detection using Machine Learning</h1>
+    </div>
+
+    <div class="main">
+      <div class="col">
+        <div class="col-title">
+          <h2>Video Play</h2>
+        </div>
+        <video class="video-player" controls autoplay>
+          <source src="{{ video_path }}" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <div class="col">
+        <div class="col-title">
+          <h2>Model Output</h2>
+        </div>
+        <div class="results">
+          <div>
+            <span>Prediction Output is </span>
+            <span id="result1" class="output">Processing...</span>
+          </div>
+          <div>
+            <span>Confidence of prediction is </span>
+            <span id="result2" class="output">Processing...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      setTimeout(function () {
+        $.get("/get_result", function (data) {
+          document.getElementById("result1").innerText = data.result1;
+          document.getElementById("result2").innerText =
+            data.result2.toString() + "%";
+        });
+      }, 5000);
+    </script>
+  </body>
+</html>
